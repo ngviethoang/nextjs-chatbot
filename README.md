@@ -28,4 +28,6 @@ CREATE TABLE users (
 );
 ```
 
-If you want to enable password to user the bot, insert `BOT_PASSWORD` to .env file
+### Authentication
+
+If you want to enable password to use the bot, insert `BOT_PASSWORD` to `.env` file

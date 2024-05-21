@@ -1,9 +1,23 @@
 const API_PREFIX = 'https://graph.facebook.com/v16.0';
 
-const fetchApi = async (url: string, init: any) => {
-  const response = await fetch(url, init);
-  if (!response.ok) throw new Error('Failed to fetch');
-  return response.json();
+const fetchApi = async (
+  url: string,
+  options: any,
+  retries = 3
+): Promise<any> => {
+  try {
+    const response = await fetch(url, options);
+    if (response.ok) {
+      const result = await response.json();
+      return result;
+    }
+  } catch (error) {
+    if (retries === 0) {
+      console.log('Failed to fetch API', error);
+      return null;
+    }
+    return fetchApi(url, options, retries - 1);
+  }
 };
 
 export const sendMessage = async (senderId: string, message: string) => {
